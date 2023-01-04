@@ -1,0 +1,94 @@
+
+.grid {
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    position: fixed;
+    bottom: 0;
+    left: 0.8%;
+    width: 2560px;
+    height: 80%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .grid-item {
+    width: 40px;
+    height: 40px;
+    border: 1px solid black;
+  }
+  .grid-item.gray {
+    background-color: gray;
+  }
+
+  .toggle-walls {
+    height: 10vh;
+    width: 10%;
+    font-size: 2rem;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Nunito', Nunito, sans-serif;
+    background: #abbeea;
+  }
+
+  .toggle-walls:hover {
+    background: rgb(95, 125, 196);
+    cursor: pointer;
+  }
+
+  .create-node {
+    height: 10vh;
+    width: 10%;
+    font-size: 2rem;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Nunito', Nunito, sans-serif;
+    background: #eaabab;
+  }
+
+  .create-node:hover {
+    background: rgb(196, 95, 95);
+    cursor: pointer;
+  }
+
+  .create-end-point {
+    position: fixed;
+    left: 20.5%;
+    height: 10vh;
+    width: 10%;
+    font-size: 2rem;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Nunito', Nunito, sans-serif;
+    background: #d8abea;
+  } 
+
+  .create-end-point:hover {
+    background: #c56ee8;
+    cursor: pointer;
+  }
+
+  .start-button {
+    position: fixed;
+    left: 30.75%;
+    height: 10vh;
+    width: 10%;
+    font-size: 2rem;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Nunito', Nunito, sans-serif;
+    background: #b2eaab;
+  } 
+
+  .start-button:hover {
+    background: #61e051;
+    cursor: pointer;
+  }
+
+  .aqua {
+    background: aqua;
+  }
+
+  .purple {
+    background-color: purple;
+  }
