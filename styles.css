@@ -69,8 +69,7 @@
   }
 
   .start-button {
-    position: fixed;
-    left: 30.75%;
+    position: fixed;left: 41%;
     height: 10vh;
     width: 10%;
     font-size: 2rem;
@@ -82,6 +81,23 @@
 
   .start-button:hover {
     background: #61e051;
+    cursor: pointer;
+  }
+
+  .set-state-button {
+    position: fixed;
+    left: 30.75%;
+    height: 10vh;
+    width: 10%;
+    font-size: 2rem;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Nunito', Nunito, sans-serif;
+    background: #eaabab;
+  } 
+
+  .set-state-button:hover {
+    background: #e05151;
     cursor: pointer;
   }
 
