@@ -1,9 +1,7 @@
-/*  TO DO LIST  */
-// TODO: Start figuring out how to implement Dijkstra's Algorithm to the starting node
-// TODO: which then keeps going until it has located the end point node
-/*              */
+// TODO: fix dji algorithm freezing my browser
 
 import { grid, gridElement, updateGridItem } from "./grid.js";
+import { dijkstra } from "./dj-algorithm.js";
 import {
   toggleCreateEndPoint,
   toggleCreateNode,
@@ -37,14 +35,18 @@ button.addEventListener("click", toggleWalls);
 createNodeButton.addEventListener("click", toggleCreateNode);
 createEndPointButton.addEventListener("click", toggleCreateEndPoint);
 startAlgorithmButton.addEventListener("click", () => {
-  console.log("button click");
-  if (createNodeColumn === null || createEndPointColumn === null) {
-    // alert("Please set both a start and end node before running the algorithm");
+  if (!createNodeColumn || !createEndPointColumn) {
+    alert("Please set both a start and end node before running the algorithm");
   } else {
     startNodeColumn = createNodeColumn;
     startNodeRow = createNodeRow;
     endNodeColumn = createEndPointColumn;
     endNodeRow = createEndPointRow;
+    console.log("btn clicked and working");
+    const shortestPath = dijkstra();
+    for (const [column, row] of shortestPath) {
+      updateGridItem(column, row, "shortest-path");
+    }
   }
 });
 
@@ -143,5 +145,25 @@ function mouseMove(event) {
     }
   }
 }
+
+const gridItemElement = document.createElement("div");
+gridItemElement.addEventListener("mousedown", () => {
+  if (createNodeOn) {
+    createNodeColumn = column;
+    createNodeRow = row;
+    toggleCreateNode();
+  } else if (createEndPointOn) {
+    createEndPointColumn = column;
+    createEndPointRow = row;
+    toggleCreateEndPoint();
+  } else {
+    grid[column][row] = !grid[column][row];
+    updateGridItem(column, row);
+    document.addEventListener("mousemove", mouseMove);
+  }
+});
+gridItemElement.addEventListener("mouseup", () => {
+  document.removeEventListener("mousemove", mouseMove);
+});
 
 export { mouseMove, startNodeColumn, startNodeRow, endNodeColumn, endNodeRow };

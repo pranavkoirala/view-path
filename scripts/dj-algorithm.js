@@ -24,7 +24,7 @@ function getNeighbors(column, row) {
   return neighbors;
 }
 
-function dijkstra() {
+export function dijkstra() {
   const visited = new Set();
   const distances = {};
   for (let column = 0; column < grid.length; column++) {
@@ -80,7 +80,13 @@ function dijkstra() {
   }
 
   // Return the shortest path
+  shortestPath.forEach(([column, row]) => {
+    const gridItemElement = document.querySelector(
+      `.grid-item[data-column="${column}"][data-row="${row}"]`
+    );
+    gridItemElement.classList.add("shortest-path");
+  });
   return shortestPath;
 }
 
-const shortestPath = dijkstra();
+// export const shortestPath = dijkstra();
