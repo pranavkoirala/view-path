@@ -1,3 +1,13 @@
+/*  BUGS  */
+//  !! Fix the bug where if you first place a starting node or finish node
+//  !! and then swap to another and place it, it starts editing the element
+/*             */
+
+/*  TO DO LIST  */
+// TODO: Start figuring out how to implement Dijkstra's Algorithm to the starting node
+// TODO: which then keeps going until it has located the end point node
+/*              */
+
 import { grid, gridElement, updateGridItem } from "./grid.js";
 import {
   toggleCreateEndPoint,
