@@ -1,8 +1,3 @@
-/*  BUGS  */
-//  !! Fix the bug where if you first place a starting node or finish node
-//  !! and then swap to another and place it, it starts editing the element
-/*             */
-
 /*  TO DO LIST  */
 // TODO: Start figuring out how to implement Dijkstra's Algorithm to the starting node
 // TODO: which then keeps going until it has located the end point node
@@ -79,36 +74,40 @@ function mouseMove(event) {
   const row = gridItemElement.dataset.row;
   if (createNodeOn) {
     if (
+      column < 0 ||
+      column >= grid.length ||
+      row < 0 ||
+      row >= grid[column].length ||
       gridItemElement.classList.contains("gray") ||
       gridItemElement.classList.contains("purple")
     ) {
       return;
     }
-    if (createNodeColumn !== column || createNodeRow !== row) {
-      if (previousGridItem) {
-        previousGridItem.classList.remove("aqua");
-      }
-      previousGridItem = gridItemElement;
-      createNodeColumn = column;
-      createNodeRow = row;
-      gridItemElement.classList.add("aqua");
+    if (previousGridItem) {
+      previousGridItem.classList.remove("aqua");
     }
+    previousGridItem = gridItemElement;
+    createNodeColumn = column;
+    createNodeRow = row;
+    gridItemElement.classList.add("aqua");
   } else if (createEndPointOn) {
     if (
+      column < 0 ||
+      column >= grid.length ||
+      row < 0 ||
+      row >= grid[column].length ||
       gridItemElement.classList.contains("gray") ||
       gridItemElement.classList.contains("aqua")
     ) {
       return;
     }
-    if (createNodeColumn !== column || createNodeRow !== row) {
-      if (previousGridPurple) {
-        previousGridPurple.classList.remove("purple");
-      }
-      previousGridPurple = gridItemElement;
-      createEndPointColumn = column;
-      createEndPointRow = row;
-      gridItemElement.classList.add("purple");
+    if (previousGridPurple) {
+      previousGridPurple.classList.remove("purple");
     }
+    previousGridPurple = gridItemElement;
+    createEndPointColumn = column;
+    createEndPointRow = row;
+    gridItemElement.classList.add("purple");
   } else {
     if (
       gridItemElement.classList.contains("aqua") ||
