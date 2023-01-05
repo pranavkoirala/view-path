@@ -17,13 +17,17 @@ let createNodeRow;
 let createEndPointColumn;
 let previousGridItem;
 let previousGridPurple;
-
+let startNodeColumn;
+let startNodeRow;
+let endNodeColumn;
+let endNodeRow;
 document.ondragstart = function () {
   return false;
 };
 
 let wallsOn = true;
 /* buttons */
+const startAlgorithmButton = document.getElementById("start-algorithm");
 const button = document.getElementById("walls-toggle");
 const createNodeButton = document.getElementById("create-node");
 const createEndPointButton = document.getElementById("create-end-point");
@@ -32,6 +36,17 @@ const createEndPointButton = document.getElementById("create-end-point");
 button.addEventListener("click", toggleWalls);
 createNodeButton.addEventListener("click", toggleCreateNode);
 createEndPointButton.addEventListener("click", toggleCreateEndPoint);
+startAlgorithmButton.addEventListener("click", () => {
+  console.log("button click");
+  if (createNodeColumn === null || createEndPointColumn === null) {
+    // alert("Please set both a start and end node before running the algorithm");
+  } else {
+    startNodeColumn = createNodeColumn;
+    startNodeRow = createNodeRow;
+    endNodeColumn = createEndPointColumn;
+    endNodeRow = createEndPointRow;
+  }
+});
 
 for (let column = 0; column < 61; column++) {
   grid[column] = [];
@@ -129,4 +144,4 @@ function mouseMove(event) {
   }
 }
 
-export { mouseMove };
+export { mouseMove, startNodeColumn, startNodeRow, endNodeColumn, endNodeRow };

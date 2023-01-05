@@ -8,11 +8,15 @@ let createEndPointColumn;
 let createEndPointRow;
 
 export function toggleCreateNode() {
-  createNodeOn = !createNodeOn;
-  if (createNodeOn) {
-    document.addEventListener("mousemove", mouseMove);
-  } else {
-    document.removeEventListener("mousemove", mouseMove);
+  if (!createEndPointOn) {
+    createNodeOn = !createNodeOn;
+    const createNodeButton = document.getElementById("create-node");
+    createNodeButton.innerText = `Create Node: ${createNodeOn}`;
+    if (createNodeOn) {
+      document.addEventListener("mousemove", mouseMove);
+    } else {
+      document.removeEventListener("mousemove", mouseMove);
+    }
   }
 }
 
@@ -45,10 +49,14 @@ export function updateCreateEndPoint() {
 }
 
 export function toggleCreateEndPoint() {
-  createEndPointOn = !createEndPointOn;
-  if (createEndPointOn) {
-    document.addEventListener("mousemove", mouseMove);
-  } else {
-    document.removeEventListener("mousemove", mouseMove);
+  if (!createNodeOn) {
+    createEndPointOn = !createEndPointOn;
+    const createEndPointButton = document.getElementById("create-end-point");
+    createEndPointButton.innerText = `Create Finish Node: ${createEndPointOn}`;
+    if (createEndPointOn) {
+      document.addEventListener("mousemove", mouseMove);
+    } else {
+      document.removeEventListener("mousemove", mouseMove);
+    }
   }
 }
