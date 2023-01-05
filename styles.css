@@ -84,23 +84,6 @@
     cursor: pointer;
   }
 
-  .set-state-button {
-    position: fixed;
-    left: 30.75%;
-    height: 10vh;
-    width: 10%;
-    font-size: 2rem;
-    border-radius: 10px;
-    border: none;
-    font-family: 'Nunito', Nunito, sans-serif;
-    background: #eaabab;
-  } 
-
-  .set-state-button:hover {
-    background: #e05151;
-    cursor: pointer;
-  }
-
   .aqua {
     background: aqua;
   }
