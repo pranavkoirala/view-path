@@ -1,92 +1,94 @@
 import { grid } from "./grid.js";
 import {
-  startNodeColumn,
-  startNodeRow,
-  endNodeColumn,
-  endNodeRow,
+  PriorityQueue,
+  createNodeColumn,
+  createNodeRow,
+  createEndPointColumn,
+  createEndPointRow,
 } from "./index.js";
 
-function getNeighbors(column, row) {
-  // Returns the neighboring nodes of the given node
-  const neighbors = [];
-  if (column > 0) {
-    neighbors.push([column - 1, row]);
-  }
-  if (column < grid.length - 1) {
-    neighbors.push([column + 1, row]);
-  }
-  if (row > 0) {
-    neighbors.push([column, row - 1]);
-  }
-  if (row < grid[column].length - 1) {
-    neighbors.push([column, row + 1]);
-  }
-  return neighbors;
-}
-
-export function dijkstra() {
-  const visited = new Set();
+export async function dijkstra(
+  grid,
+  createNodeColumn,
+  createNodeRow,
+  createEndPointColumn,
+  createEndPointRow
+) {
+  console.log(
+    grid,
+    createNodeColumn,
+    createNodeRow,
+    createEndPointColumn,
+    createEndPointRow
+  );
+  console.log("dijkstra start");
+  // Initialize distances and previous objects
+  console.log("initializing distances and previous");
   const distances = {};
+  const previous = {};
   for (let column = 0; column < grid.length; column++) {
     for (let row = 0; row < grid[column].length; row++) {
-      distances[[column, row]] = Infinity;
+      distances[`${column},${row}`] = Infinity;
+      previous[`${column},${row}`] = undefined;
     }
   }
-  distances[[startNodeColumn, startNodeRow]] = 0;
+  distances[`${createNodeColumn},${createNodeRow}`] = 0;
 
-  while (visited.size < Object.keys(distances).length) {
-    // Select the unvisited node with the smallest distance from the start node
-    let currentNode = null;
-    let currentDistance = Infinity;
-    for (const [node, distance] of Object.entries(distances)) {
-      if (!visited.has(node) && distance < currentDistance) {
-        currentNode = node;
-        currentDistance = distance;
-      }
+  // Initialize priority queue and add all nodes to it
+  console.log("initializing priority queue and adding all nodes");
+  const q = new PriorityQueue((a, b) => a[1] < b[1]);
+  for (let column = 0; column < grid.length; column++) {
+    for (let row = 0; row < grid[column].length; row++) {
+      q.enqueue([`${column},${row}`, distances[`${column},${row}`]]);
     }
+  }
 
-    // Mark this node as visited
-    visited.add(currentNode);
+  // Dijkstra's algorithm loop
+  console.log("starting dijkstra loop");
+  while (!q.isEmpty()) {
+    console.log("iteration start");
+    const [currentNode, currentDistance] = q.dequeue();
+    const [currentColumn, currentRow] = currentNode.split(",");
+    if (currentDistance === Infinity) break;
 
-    // Update the distances of the neighbors
-    const neighbors = getNeighbors(...currentNode.split(",").map(Number));
+    // Check neighbors
+    console.log("checking neighbors");
+    const neighbors = [
+      [parseInt(currentColumn) + 1, parseInt(currentRow)],
+      [parseInt(currentColumn), parseInt(currentRow) + 1],
+      [parseInt(currentColumn) - 1, parseInt(currentRow)],
+      [parseInt(currentColumn), parseInt(currentRow) - 1],
+    ];
     for (const neighbor of neighbors) {
-      const cost =
-        distances[currentNode] + (grid[neighbor[0]][neighbor[1]] ? 1 : 0); // Add 1 to the cost if the neighbor is a wall
-      if (cost < distances[neighbor]) {
-        distances[neighbor] = cost;
+      console.log(`visiting neighbor: ${neighbor}`);
+      const [column, row] = neighbor;
+      if (grid[column][row] === false) continue;
+      const distance = currentDistance + 1;
+      const node = `${column},${row}`;
+      const element = document.querySelector(`[data-node="${node}"]`);
+      console.log("ELEMENT: " + element);
+      if (distance < distances[node]) {
+        distances[node] = distance;
+        previous[node] = currentNode;
+        q.enqueue([node, distance]);
       }
     }
+    // Delay the next iteration
+    console.log("delaying next iteration");
+    await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
-  // Find the shortest path by backtracking through the nodes
-  let column = endNodeColumn;
-  let row = endNodeRow;
-  const shortestPath = [[column, row]];
-  while (column !== startNodeColumn || row !== startNodeRow) {
-    const neighbors = getNeighbors(column, row);
-    let minDistance = Infinity;
-    let minNeighbor = null;
-    for (const neighbor of neighbors) {
-      const distance = distances[neighbor];
-      if (distance < minDistance) {
-        minDistance = distance;
-        minNeighbor = neighbor;
-      }
-    }
-    column = minNeighbor[0];
-    row = minNeighbor[1];
-    shortestPath.unshift([column, row]);
+  // Reconstruct shortest path
+  console.log("reconstructing shortest path");
+  const path = [];
+  let current = `${createEndPointColumn},${createEndPointRow}`;
+  while (current !== undefined) {
+    console.log(path);
+    console.log(`current: ${current}`);
+    path.unshift(current);
+    current = previous[current];
   }
 
-  // Return the shortest path
-  shortestPath.forEach(([column, row]) => {
-    const gridItemElement = document.querySelector(
-      `.grid-item[data-column="${column}"][data-row="${row}"]`
-    );
-    gridItemElement.classList.add("shortest-path");
-  });
-  return shortestPath;
+  console.log("dijkstra end");
+  return previous;
 }
-
-// export const shortestPath = dijkstra();
