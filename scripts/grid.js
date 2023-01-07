@@ -1,7 +1,7 @@
 export const grid = [];
 export const gridElement = document.querySelector(".grid");
 
-export function updateGridItem(column, row, className) {
+export function updateGrid(column, row, className) {
   const gridItemElement = gridElement.querySelector(
     `[data-column="${column}"][data-row="${row}"]`
   );
