@@ -1,145 +1,157 @@
-import { grid, gridElement, updateGrid } from "./grid.js";
-import djAlgorithm from "./dj-algorithm.js";
-import {
-  toggleCreateEndPoint,
-  toggleCreateNode,
-  createEndPointOn,
-  createNodeOn,
-} from "./points.js";
-
-let createEndPointRow;
-let createNodeColumn;
-let createNodeRow;
-let createEndPointColumn;
-let previousGridItem;
-let previousGridPurple;
-
+import { dijkstraAlgorithm } from "./algorithms/dijkstra.js";
+import { aStarAlgorithm } from "./algorithms/a_star.js";
+const gridContainer = document.querySelector(".grid-container");
+const toggleWallsButton = document.querySelector("#toggle-walls-button");
+const clearWallsButton = document.querySelector("#clear-walls-button");
+const startNodeButton = document.querySelector(".start-node-button");
+const endNodeButton = document.querySelector(".end-node-button");
+const startAlgorithmButton = document.querySelector("#start-algorithm-button");
+const clearGridButton = document.querySelector("#clear-grid-button");
 document.ondragstart = function () {
   return false;
 };
 
-let wallsOn = true;
-/* buttons */
-const button = document.getElementById("walls-toggle");
-const createNodeButton = document.getElementById("create-node");
-const createEndPointButton = document.getElementById("create-end-point");
-const startAlgorithmButton = document.getElementById("start-algorithm");
+let toggleWalls = true;
+let isMouseDown = false;
+let startingNodeToggled = false;
+let endingNodeToggled = false;
 
-/* Event Listeners */
-button.addEventListener("click", toggleWalls);
-createNodeButton.addEventListener("click", toggleCreateNode);
-createEndPointButton.addEventListener("click", toggleCreateEndPoint);
-startAlgorithmButton.addEventListener("click", () => {
-  const shortestPath = djAlgorithm();
-  for (const coordinates of shortestPath) {
-    // Split the coordinates into separate variables
-    const column = parseInt(coordinates.split(",")[0]);
-    const row = parseInt(coordinates.split(",")[1]);
-    // Highlight the current node in the grid
-    updateGrid(column, row, "highlighted");
+for (let row = 0; row < 43; row++) {
+  const gridRow = document.createElement("div");
+  gridRow.classList.add("grid-row");
+  for (let col = 0; col < 103; col++) {
+    const gridItem = document.createElement("div");
+    gridItem.classList.add("grid-item");
+    gridItem.dataset.row = row;
+    gridItem.dataset.col = col;
+    gridRow.appendChild(gridItem);
+  }
+  gridContainer.appendChild(gridRow);
+}
+
+toggleWallsButton.addEventListener("click", () => {
+  toggleWalls = !toggleWalls;
+});
+
+gridContainer.addEventListener("mousedown", (e) => {
+  isMouseDown = true;
+});
+
+gridContainer.addEventListener("mousemove", (event) => {
+  if (
+    isMouseDown &&
+    !event.target.classList.contains("starting-node") &&
+    !event.target.classList.contains("ending-node") &&
+    !startingNodeToggled &&
+    !endingNodeToggled
+  ) {
+    if (event.target.classList.contains("grid-item")) {
+      if (toggleWalls) {
+        event.target.classList.add("wall");
+      } else {
+        event.target.classList.remove("wall");
+      }
+    }
+  }
+});
+let startNode = null;
+let endNode = null;
+
+gridContainer.addEventListener("mouseup", () => {
+  isMouseDown = false;
+});
+
+clearWallsButton.addEventListener("click", () => {
+  const gridItems = document.querySelectorAll(".grid-item");
+  gridItems.forEach((gridItem) => {
+    gridItem.classList.remove("wall");
+  });
+});
+
+clearGridButton.addEventListener("click", () => {
+  const gridItems = document.querySelectorAll(".grid-item");
+  gridItems.forEach((gridItem) => {
+    gridItem.classList.remove("wall");
+  });
+  startNode.classList.remove("start-node");
+  endNode.classList.remove("end-node");
+  startNode = null;
+  endNode = null;
+});
+
+startNodeButton.addEventListener("click", (event) => {
+  endNodeButton.classList.remove("active");
+  startNodeButton.classList.add("active");
+});
+
+endNodeButton.addEventListener("click", (event) => {
+  startNodeButton.classList.remove("active");
+  endNodeButton.classList.add("active");
+});
+
+gridContainer.addEventListener("click", (event) => {
+  const clickedItem = event.target;
+
+  if (clickedItem.classList.contains("grid-item")) {
+    if (startNodeButton.classList.contains("active")) {
+      startNodeButton.classList.remove("active");
+      if (startNode) {
+        startNode.classList.remove("start-node");
+      }
+      startNode = clickedItem;
+      startNode.classList.add("start-node");
+    } else if (endNodeButton.classList.contains("active")) {
+      endNodeButton.classList.remove("active");
+      if (endNode) {
+        endNode.classList.remove("end-node");
+      }
+      endNode = clickedItem;
+      endNode.classList.add("end-node");
+    }
   }
 });
 
-for (let column = 0; column < 61; column++) {
-  grid[column] = [];
-  for (let row = 0; row < 31; row++) {
-    grid[column][row] = false;
-    const gridItemElement = document.createElement("div");
-    gridItemElement.classList.add("grid-item");
-    gridItemElement.dataset.column = column;
-    gridItemElement.dataset.row = row;
-    gridElement.appendChild(gridItemElement);
-    gridItemElement.addEventListener("mousedown", () => {
-      if (createNodeOn) {
-        createNodeColumn = column;
-        createNodeRow = row;
-        toggleCreateNode();
-      } else if (createEndPointOn) {
-        createEndPointColumn = column;
-        createEndPointRow = row;
-        toggleCreateEndPoint();
-      } else {
-        grid[column][row] = !grid[column][row];
-        updateGrid(column, row);
-        document.addEventListener("mousemove", mouseMove);
-      }
-    });
-    gridItemElement.addEventListener("mouseup", () => {
-      document.removeEventListener("mousemove", mouseMove);
-    });
+startAlgorithmButton.addEventListener("click", () => {
+  const selectedSpeed = document.getElementById("speeds").value;
+  const selectedAlgorithm = document.getElementById("algorithms").value;
+  let algorithm = "dijkstra";
+  let speed = 0;
+  switch (selectedSpeed) {
+    case "fast":
+      speed = 50;
+      break;
+    case "medium":
+      speed = 150;
+      break;
+    case "slow":
+      speed = 250;
+      break;
+    case "sloth":
+      speed = 350;
+      break;
+    default:
+      speed = 0;
   }
-}
-function toggleWalls() {
-  wallsOn = !wallsOn;
-  const toggleWallsButton = document.getElementById("walls-toggle");
-  toggleWallsButton.innerText = `Toggle Walls: ${wallsOn}`;
-}
 
-function mouseMove(event) {
-  const gridItemElement = event.target;
-  const column = gridItemElement.dataset.column;
-  const row = gridItemElement.dataset.row;
-  if (createNodeOn) {
-    if (
-      column < 0 ||
-      column >= grid.length ||
-      row < 0 ||
-      row >= grid[column].length ||
-      gridItemElement.classList.contains("gray") ||
-      gridItemElement.classList.contains("purple")
-    ) {
-      return;
+  if (startNode && endNode) {
+    const grid = Array.from(document.querySelectorAll(".grid-item"));
+    switch (selectedAlgorithm) {
+      case "dijkstra-algorithm":
+        dijkstraAlgorithm(grid, startNode, endNode, speed);
+        break;
+      case "a-star-algorithm":
+        aStarAlgorithm(grid, startNode, endNode, speed);
+        break;
+      case "bfs-algorithm":
+        break;
+      case "dfs-algorithm":
+        break;
+      case "bellman-algorithm":
+        break;
+      case "floyd-algorithm":
+        break;
     }
-    if (previousGridItem) {
-      previousGridItem.classList.remove("aqua");
-    }
-    previousGridItem = gridItemElement;
-    createNodeColumn = column;
-    createNodeRow = row;
-    gridItemElement.classList.add("aqua");
-  } else if (createEndPointOn) {
-    if (
-      column < 0 ||
-      column >= grid.length ||
-      row < 0 ||
-      row >= grid[column].length ||
-      gridItemElement.classList.contains("gray") ||
-      gridItemElement.classList.contains("aqua")
-    ) {
-      return;
-    }
-    if (previousGridPurple) {
-      previousGridPurple.classList.remove("purple");
-    }
-    previousGridPurple = gridItemElement;
-    createEndPointColumn = column;
-    createEndPointRow = row;
-    gridItemElement.classList.add("purple");
   } else {
-    if (
-      gridItemElement.classList.contains("aqua") ||
-      gridItemElement.classList.contains("purple")
-    ) {
-      return;
-    }
-    if (wallsOn) {
-      if (!grid[column][row]) {
-        grid[column][row] = true;
-        updateGrid(column, row);
-      }
-    } else {
-      if (grid[column][row]) {
-        grid[column][row] = false;
-        updateGrid(column, row);
-      }
-    }
+    alert("Please place a start node and an end node.");
   }
-}
-
-export {
-  mouseMove,
-  createNodeColumn,
-  createNodeRow,
-  createEndPointColumn,
-  createEndPointRow,
-};
+});
