@@ -71,10 +71,16 @@ clearWallsButton.addEventListener("click", () => {
 clearGridButton.addEventListener("click", () => {
   const gridItems = document.querySelectorAll(".grid-item");
   gridItems.forEach((gridItem) => {
-    gridItem.classList.remove("wall");
+    gridItem.classList.remove(
+      "wall",
+      "visited-node",
+      "shortest-path",
+      "start-node",
+      "end-node"
+    );
   });
-  startNode.classList.remove("start-node");
-  endNode.classList.remove("end-node");
+  // startNode.classList.remove("start-node");
+  // endNode.classList.remove("end-node");
   startNode = null;
   endNode = null;
 });
