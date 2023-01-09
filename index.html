@@ -6,9 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grid</title>
     <link rel="stylesheet" href="./styles/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,700;0,800;1,600&display=swap"
+      rel="stylesheet"
+    />
     <script type="module" src="./scripts/index.js" defer></script>
   </head>
   <body>
+    <!-- <div class="tutorial-wrapper">
+      <div class="tutorial">
+        <button class="next-button">Next</button>
+      </div>
+    </div> -->
     <div class="grid-container"></div>
     <select name="speeds" id="speeds">
       <option value="very-fast">Very Fast</option>
@@ -20,12 +31,12 @@
     <select name="algorithms" id="algorithms">
       <option value="dijkstra-algorithm">Dijkstra</option>
       <option value="a-star-algorithm">A*</option>
-      <!-- <option value="bfs-algorithm">Breadth-first Search</option>
-      <option value="dfs-algorithm">Depth-first Search</option>
+      <option value="bfs-algorithm">Breadth-first Search</option>
+      <!-- <option value="dfs-algorithm">Depth-first Search</option>
       <option value="bellman-algorithm">Bellman-Ford</option>
       <option value="floyd-algorithm">Floyd Warshall</option> -->
     </select>
-    <button id="toggle-walls-button">Toggle Walls</button>
+    <button id="toggle-walls-button">Toggle Walls: true</button>
     <button class="start-node-button">Start Node</button>
     <button class="end-node-button">End Node</button>
     <button id="clear-walls-button">Clear Walls</button>
