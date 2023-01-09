@@ -1,0 +1,80 @@
+body {
+  overflow: hidden;
+}
+
+.grid-container {
+  height: 80vh;
+  width: 2560px;
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  bottom: 1%;
+  left: 0%;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-item {
+  background-color: white;
+  border: 1px solid black;
+  width: 24px;
+  height: 24px;
+}
+
+.wall {
+  background: gray;
+}
+
+button {
+  height: 10vh;
+  width: 10vw;
+  font-size: 1.7rem;
+  background: #dd8888;
+}
+
+button:hover {
+  cursor: pointer;
+  background: #d75252;
+}
+
+.start-node {
+  background: #abbeea;
+}
+
+.end-node {
+  background: #fff000;
+}
+
+.shortest-path {
+  background: #88e297 !important;
+  background-size: 0%;
+  transition: background 0.5s linear, color 0.5s linear;
+}
+
+.visited-node {
+  background: #bc88e2;
+  background-size: 0%;
+  transition: background 0.5s linear, color 0.5s linear;
+}
+
+#speeds {
+  position: absolute;
+  right: 1%;
+  width: 5vw;
+}
+
+#algorithms {
+  position: absolute;
+  right: 6.5%;
+  width: 5vw;
+}
+
+.visited-node.animate {
+  background-size: 100%;
+}
+
+.shortest-path.animate {
+  background-size: 100%;
+}
