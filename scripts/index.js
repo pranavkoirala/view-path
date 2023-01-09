@@ -1,5 +1,9 @@
+/* Imports */
 import { dijkstraAlgorithm } from "./algorithms/dijkstra.js";
 import { aStarAlgorithm } from "./algorithms/a_star.js";
+import { bfs } from "./algorithms/bfs.js";
+
+/* Elements */
 const gridContainer = document.querySelector(".grid-container");
 const toggleWallsButton = document.querySelector("#toggle-walls-button");
 const clearWallsButton = document.querySelector("#clear-walls-button");
@@ -7,6 +11,9 @@ const startNodeButton = document.querySelector(".start-node-button");
 const endNodeButton = document.querySelector(".end-node-button");
 const startAlgorithmButton = document.querySelector("#start-algorithm-button");
 const clearGridButton = document.querySelector("#clear-grid-button");
+const selectedSpeed = document.getElementById("speeds");
+const selectedAlgorithm = document.getElementById("algorithms");
+
 document.ondragstart = function () {
   return false;
 };
@@ -15,7 +22,17 @@ let toggleWalls = true;
 let isMouseDown = false;
 let startingNodeToggled = false;
 let endingNodeToggled = false;
+let tutorialFinished = false;
 
+// /* Tutorial */
+// document.onload = tutorial();
+// function tutorial() {
+//   gridContainer.style.zIndex = "-1";
+//   selectedSpeed.style.zIndex = "-1";
+//   selectedAlgorithm.style.zIndex = "-1";
+// }
+
+/* After Tutorial */
 for (let row = 0; row < 43; row++) {
   const gridRow = document.createElement("div");
   gridRow.classList.add("grid-row");
@@ -31,6 +48,7 @@ for (let row = 0; row < 43; row++) {
 
 toggleWallsButton.addEventListener("click", () => {
   toggleWalls = !toggleWalls;
+  toggleWallsButton.innerHTML = `Toggle Walls: ${toggleWalls}`;
 });
 
 gridContainer.addEventListener("mousedown", (e) => {
@@ -79,8 +97,6 @@ clearGridButton.addEventListener("click", () => {
       "end-node"
     );
   });
-  // startNode.classList.remove("start-node");
-  // endNode.classList.remove("end-node");
   startNode = null;
   endNode = null;
 });
@@ -118,11 +134,10 @@ gridContainer.addEventListener("click", (event) => {
 });
 
 startAlgorithmButton.addEventListener("click", () => {
-  const selectedSpeed = document.getElementById("speeds").value;
-  const selectedAlgorithm = document.getElementById("algorithms").value;
-  let algorithm = "dijkstra";
+  const selectedSpeedValue = selectedSpeed.value;
+  const selectedAlgorithmValue = selectedAlgorithm.value;
   let speed = 0;
-  switch (selectedSpeed) {
+  switch (selectedSpeedValue) {
     case "fast":
       speed = 50;
       break;
@@ -141,15 +156,16 @@ startAlgorithmButton.addEventListener("click", () => {
 
   if (startNode && endNode) {
     const grid = Array.from(document.querySelectorAll(".grid-item"));
-    switch (selectedAlgorithm) {
+    switch (selectedAlgorithmValue) {
       case "dijkstra-algorithm":
         dijkstraAlgorithm(grid, startNode, endNode, speed);
         break;
       case "a-star-algorithm":
         aStarAlgorithm(grid, startNode, endNode, speed);
         break;
-      // case "bfs-algorithm":
-      //   break;
+      case "bfs-algorithm":
+        console.log(bfs(grid, startNode, endNode, speed));
+        break;
       // case "dfs-algorithm":
       //   break;
       // case "bellman-algorithm":
