@@ -5,16 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Grid</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
     <script type="module" src="./scripts/index.js" defer></script>
   </head>
   <body>
-    <button id="walls-toggle" class="toggle-walls">Toggle Walls: true</button>
-    <button id="create-node" class="create-node">Create Node: false</button>
-    <button id="create-end-point" class="create-end-point">
-      Create Finish Node: false
-    </button>
-    <button id="start-algorithm" class="start-button">Start Algorithm</button>
-    <div class="grid"></div>
+    <div class="grid-container"></div>
+    <select name="speeds" id="speeds">
+      <option value="very-fast">Very Fast</option>
+      <option value="fast">Fast</option>
+      <option value="medium">Medium</option>
+      <option value="slow">Slow</option>
+      <option value="sloth">Sloth</option>
+    </select>
+    <select name="algorithms" id="algorithms">
+      <option value="dijkstra-algorithm">Dijkstra</option>
+      <option value="a-star-algorithm">A*</option>
+      <option value="bfs-algorithm">Breadth-first Search</option>
+      <option value="dfs-algorithm">Depth-first Search</option>
+      <option value="bellman-algorithm">Bellman-Ford</option>
+      <option value="floyd-algorithm">Floyd Warshall</option>
+    </select>
+    <button id="toggle-walls-button">Toggle Walls</button>
+    <button class="start-node-button">Start Node</button>
+    <button class="end-node-button">End Node</button>
+    <button id="clear-walls-button">Clear Walls</button>
+    <button id="clear-grid-button">Clear Grid</button>
+    <button id="start-algorithm-button">Start Algorithm</button>
   </body>
 </html>
