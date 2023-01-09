@@ -142,14 +142,14 @@ startAlgorithmButton.addEventListener("click", () => {
       case "a-star-algorithm":
         aStarAlgorithm(grid, startNode, endNode, speed);
         break;
-      case "bfs-algorithm":
-        break;
-      case "dfs-algorithm":
-        break;
-      case "bellman-algorithm":
-        break;
-      case "floyd-algorithm":
-        break;
+      // case "bfs-algorithm":
+      //   break;
+      // case "dfs-algorithm":
+      //   break;
+      // case "bellman-algorithm":
+      //   break;
+      // case "floyd-algorithm":
+      //   break;
     }
   } else {
     alert("Please place a start node and an end node.");
