@@ -14,7 +14,9 @@ export function bfs(grid, startNode, endNode, speed) {
 
       visitedNodes.add(currentNode);
 
-      currentNode.classList.add("visited-node", "animate");
+      if (!currentNode.classList.contains("shortest-path")) {
+        currentNode.classList.add("visited-node", "animate");
+      }
 
       const neighbors = getNeighboringNodes(currentNode);
       for (const neighbor of neighbors) {

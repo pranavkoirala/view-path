@@ -41,7 +41,9 @@ export function aStarAlgorithm(grid, startNode, endNode, speed) {
         }
       }
 
-      currentNode.classList.add("visited-node", "animate");
+      if (!currentNode.classList.contains("shortest-path")) {
+        currentNode.classList.add("visited-node", "animate");
+      }
 
       setTimeout(loop, speed);
     } else {

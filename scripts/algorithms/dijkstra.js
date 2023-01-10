@@ -26,7 +26,9 @@ export function dijkstraAlgorithm(grid, startNode, endNode, speed) {
 
       unvisitedNodes.delete(currentNode);
 
-      currentNode.classList.add("visited-node", "animate");
+      if (!currentNode.classList.contains("shortest-path")) {
+        currentNode.classList.add("visited-node", "animate");
+      }
 
       if (currentNode === endNode) {
         reachedEndNode = true;
