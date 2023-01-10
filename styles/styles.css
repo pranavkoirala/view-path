@@ -21,6 +21,7 @@ body {
   border: 1px solid black;
   width: 24px;
   height: 24px;
+  transform: scale(0.9);
 }
 
 .wall {
@@ -67,7 +68,7 @@ button:hover {
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(0.9);
     background-color: #88e297;
   }
 }
@@ -79,7 +80,7 @@ button:hover {
   }
 
   100% {
-    transform: scale(1);
+    transform: scale(0.9);
     background-color: #bc88e2;
   }
 }
