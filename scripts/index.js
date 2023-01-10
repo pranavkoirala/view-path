@@ -12,6 +12,7 @@ const endNodeButton = document.querySelector(".end-node-button");
 const startAlgorithmButton = document.querySelector("#start-algorithm-button");
 const clearGridButton = document.querySelector("#clear-grid-button");
 const selectedSpeed = document.getElementById("speeds");
+const keepPreviousGridButton = document.querySelector(".keep-previous-grid");
 const selectedAlgorithm = document.getElementById("algorithms");
 const targetSvg = document.getElementById("my-target");
 const startSvg = document.getElementById("my-start");
@@ -25,6 +26,7 @@ let isMouseDown = false;
 let startingNodeToggled = false;
 let endingNodeToggled = false;
 let tutorialFinished = false;
+let keepPreviousGrid = false;
 
 // /* Tutorial */
 // document.onload = tutorial();
@@ -51,6 +53,11 @@ for (let row = 0; row < 43; row++) {
 toggleWallsButton.addEventListener("click", () => {
   toggleWalls = !toggleWalls;
   toggleWallsButton.innerHTML = `Toggle Walls: ${toggleWalls}`;
+});
+
+keepPreviousGridButton.addEventListener("click", () => {
+  keepPreviousGrid = !keepPreviousGrid;
+  keepPreviousGridButton.innerHTML = `Keep Grid: ${keepPreviousGrid}`;
 });
 
 gridContainer.addEventListener("mousedown", (e) => {
@@ -140,6 +147,12 @@ gridContainer.addEventListener("click", (event) => {
 });
 
 startAlgorithmButton.addEventListener("click", () => {
+  if (!keepPreviousGrid) {
+    const gridItems = document.querySelectorAll(".grid-item");
+    gridItems.forEach((gridItem) => {
+      gridItem.classList.remove("visited-node", "shortest-path");
+    });
+  }
   const selectedSpeedValue = selectedSpeed.value;
   const selectedAlgorithmValue = selectedAlgorithm.value;
   let speed = 0;
@@ -197,3 +210,5 @@ function addStartSVG(startNode) {
 function addEndSVG(endNode) {
   endNode.appendChild(targetSvg);
 }
+
+function clearGrid() {}
