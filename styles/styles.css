@@ -63,20 +63,28 @@ button:hover {
 .shortest-path {
   background: #88e297 !important;
   transform: scale(0);
-  transition: transform 0.5s linear;
+  transition: transform 5s linear;
+}
+
+.shortest-path {
+  background: #88e297 !important;
+  transform: scale(0);
+  transition: transform 0.5s linear, color 0.5s linear;
+  transition-delay: 0.5s;
+}
+
+.shortest-path.animate {
+  transform: scale(1);
 }
 
 .visited-node {
   background: #bc88e2;
   transform: scale(0);
-  transition: transform 0.5s linear;
+  transition: transform 0.5s linear, color 0.5s linear;
+  transition-delay: 0.5s;
 }
 
 .visited-node.animate {
-  transform: scale(1);
-}
-
-.shortest-path.animate {
   transform: scale(1);
 }
 
