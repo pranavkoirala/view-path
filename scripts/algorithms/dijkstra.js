@@ -62,7 +62,7 @@ export function dijkstraAlgorithm(grid, startNode, endNode, speed) {
           shortestPath[i].classList.add("shortest-path", "animate");
           shortestPath[i].classList.remove("visited-node");
           i++;
-          setTimeout(animateShortestPath, speed);
+          setTimeout(animateShortestPath, speed + 50);
         }
       };
 

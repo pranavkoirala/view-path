@@ -107,7 +107,7 @@ export function bfs(grid, startNode, endNode, speed) {
         shortestPath[i].classList.add("shortest-path", "animate");
         shortestPath[i].classList.remove("visited-node");
         i++;
-        setTimeout(animate, speed);
+        setTimeout(animate, speed + 50);
       }
     };
     animate();
