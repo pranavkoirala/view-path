@@ -13,6 +13,8 @@ const startAlgorithmButton = document.querySelector("#start-algorithm-button");
 const clearGridButton = document.querySelector("#clear-grid-button");
 const selectedSpeed = document.getElementById("speeds");
 const selectedAlgorithm = document.getElementById("algorithms");
+const targetSvg = document.getElementById("my-target");
+const startSvg = document.getElementById("my-start");
 
 document.ondragstart = function () {
   return false;
@@ -87,6 +89,8 @@ clearWallsButton.addEventListener("click", () => {
 });
 
 clearGridButton.addEventListener("click", () => {
+  if (startSvg) startSvg.parentNode.removeChild(startSvg);
+  if (targetSvg) targetSvg.parentNode.removeChild(targetSvg);
   const gridItems = document.querySelectorAll(".grid-item");
   gridItems.forEach((gridItem) => {
     gridItem.classList.remove(
@@ -121,6 +125,7 @@ gridContainer.addEventListener("click", (event) => {
         startNode.classList.remove("start-node");
       }
       startNode = clickedItem;
+      addStartSVG(startNode);
       startNode.classList.add("start-node");
     } else if (endNodeButton.classList.contains("active")) {
       endNodeButton.classList.remove("active");
@@ -128,6 +133,7 @@ gridContainer.addEventListener("click", (event) => {
         endNode.classList.remove("end-node");
       }
       endNode = clickedItem;
+      addEndSVG(endNode);
       endNode.classList.add("end-node");
     }
   }
@@ -155,6 +161,12 @@ startAlgorithmButton.addEventListener("click", () => {
   }
 
   if (startNode && endNode) {
+    if (startNode.classList.contains("wall")) {
+      startNode.classList.remove("wall");
+    }
+    if (endNode.classList.contains("wall")) {
+      endNode.classList.remove("wall");
+    }
     const grid = Array.from(document.querySelectorAll(".grid-item"));
     switch (selectedAlgorithmValue) {
       case "dijkstra-algorithm":
@@ -177,3 +189,11 @@ startAlgorithmButton.addEventListener("click", () => {
     alert("Please place a start node and an end node.");
   }
 });
+
+function addStartSVG(startNode) {
+  startNode.appendChild(startSvg);
+}
+
+function addEndSVG(endNode) {
+  endNode.appendChild(targetSvg);
+}
