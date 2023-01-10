@@ -47,17 +47,6 @@ button:hover {
   background: #fff000;
 }
 
-.shortest-path {
-  background: #88e297 !important;
-  background-size: 0%;
-  transition: background 0.5s linear, color 0.5s linear;
-}
-
-.visited-node {
-  background: #bc88e2;
-  background-size: 0%;
-  transition: background 0.5s linear, color 0.5s linear;
-}
 
 #speeds {
   position: absolute;
@@ -71,12 +60,24 @@ button:hover {
   width: 5vw;
 }
 
+.shortest-path {
+  background: #88e297 !important;
+  transform: scale(0);
+  transition: transform 0.5s linear;
+}
+
+.visited-node {
+  background: #bc88e2;
+  transform: scale(0);
+  transition: transform 0.5s linear;
+}
+
 .visited-node.animate {
-  background-size: 100%;
+  transform: scale(1);
 }
 
 .shortest-path.animate {
-  background-size: 100%;
+  transform: scale(1);
 }
 
 /* .tutorial-wrapper {
