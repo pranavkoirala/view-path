@@ -1,3 +1,4 @@
+import { enableButtons } from "../index.js";
 export function aStarAlgorithm(grid, startNode, endNode, speed) {
   const distanceMap = new Map();
   const fScoreMap = new Map();
@@ -67,6 +68,8 @@ export function aStarAlgorithm(grid, startNode, endNode, speed) {
       };
 
       animateShortestPath();
+
+      enableButtons();
     }
   };
 

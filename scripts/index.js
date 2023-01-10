@@ -7,8 +7,8 @@ import { bfs } from "./algorithms/bfs.js";
 const gridContainer = document.querySelector(".grid-container");
 const toggleWallsButton = document.querySelector("#toggle-walls-button");
 const clearWallsButton = document.querySelector("#clear-walls-button");
-const startNodeButton = document.querySelector(".start-node-button");
-const endNodeButton = document.querySelector(".end-node-button");
+const startNodeButton = document.getElementById("start-node-button");
+const endNodeButton = document.getElementById("end-node-button");
 const startAlgorithmButton = document.querySelector("#start-algorithm-button");
 const clearGridButton = document.querySelector("#clear-grid-button");
 const selectedSpeed = document.getElementById("speeds");
@@ -16,7 +16,9 @@ const keepPreviousGridButton = document.querySelector(".keep-previous-grid");
 const selectedAlgorithm = document.getElementById("algorithms");
 const targetSvg = document.getElementById("my-target");
 const startSvg = document.getElementById("my-start");
-
+startNodeButton.disabled = false;
+endNodeButton.disabled = false;
+startAlgorithmButton.disabled = false;
 document.ondragstart = function () {
   return false;
 };
@@ -147,6 +149,9 @@ gridContainer.addEventListener("click", (event) => {
 });
 
 startAlgorithmButton.addEventListener("click", () => {
+  startNodeButton.disabled = true;
+  endNodeButton.disabled = true;
+  startAlgorithmButton.disabled = true;
   if (!keepPreviousGrid) {
     const gridItems = document.querySelectorAll(".grid-item");
     gridItems.forEach((gridItem) => {
@@ -189,7 +194,7 @@ startAlgorithmButton.addEventListener("click", () => {
         aStarAlgorithm(grid, startNode, endNode, speed);
         break;
       case "bfs-algorithm":
-        console.log(bfs(grid, startNode, endNode, speed));
+        bfs(grid, startNode, endNode, speed);
         break;
       // case "dfs-algorithm":
       //   break;
@@ -211,4 +216,8 @@ function addEndSVG(endNode) {
   endNode.appendChild(targetSvg);
 }
 
-function clearGrid() {}
+export function enableButtons() {
+  startNodeButton.disabled = false;
+  endNodeButton.disabled = false;
+  startAlgorithmButton.disabled = false;
+}

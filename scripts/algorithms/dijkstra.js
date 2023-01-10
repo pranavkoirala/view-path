@@ -1,3 +1,5 @@
+import { enableButtons } from "../index.js";
+
 export function dijkstraAlgorithm(grid, startNode, endNode, speed) {
   const distanceMap = new Map();
   for (const node of grid) {
@@ -69,6 +71,8 @@ export function dijkstraAlgorithm(grid, startNode, endNode, speed) {
       };
 
       animateShortestPath();
+
+      enableButtons();
     }
   };
   loop();

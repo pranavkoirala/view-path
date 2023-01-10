@@ -1,3 +1,5 @@
+import { enableButtons } from "../index.js";
+
 export function bfs(grid, startNode, endNode, speed) {
   const visitedNodes = new Set();
   const queue = [startNode];
@@ -9,6 +11,7 @@ export function bfs(grid, startNode, endNode, speed) {
       if (currentNode === endNode) {
         const shortestPath = getShortestPath(startNode, endNode, visitedNodes);
         animateShortestPath(shortestPath, speed, startNode);
+        enableButtons();
         return;
       }
 
