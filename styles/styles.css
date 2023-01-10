@@ -60,24 +60,38 @@ button:hover {
   width: 5vw;
 }
 
+@keyframes grow {
+  0% {
+    transform: scale(1.2);
+    background-color: yellow;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #88e297;
+  }
+}
+
+@keyframes grow-reverse {
+  0% {
+    transform: scale(1.2);
+    background-color: #88cbe2;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #bc88e2;
+  }
+}
+
 .shortest-path {
-  background: #88e297 !important;
-  transform: scale(0);
-  transition: transform 0.5s linear;
+  animation: grow 0.5s ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 .visited-node {
-  background: #bc88e2;
-  transform: scale(0);
-  transition: transform 0.5s linear;
-}
-
-.visited-node.animate {
-  transform: scale(1);
-}
-
-.shortest-path.animate {
-  transform: scale(1);
+  animation: grow-reverse 0.5s ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 /* .tutorial-wrapper {
