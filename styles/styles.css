@@ -63,10 +63,20 @@ button:hover {
 
 @keyframes grow {
   0% {
-    transform: scale(1.2);
-    background-color: yellow;
+    transform: scale(0);
+    background-color: #d8bbb0;
   }
-
+  50% {
+  background-color: rgb(72, 207, 94);
+  }
+  70% {
+    transform: scale(1.2);
+  background-color: rgb(0, 83, 14);
+  }
+  90% {
+    transform: scale(1);
+    background-color: rgb(17, 131, 36);
+  }
   100% {
     transform: scale(0.9);
     background-color: #88e297;
@@ -75,10 +85,23 @@ button:hover {
 
 @keyframes grow-reverse {
   0% {
-    transform: scale(1.2);
+    transform: scale(0);
     background-color: #88cbe2;
   }
+50% {
+  background-color: #005875;
+}
 
+70% {
+  transform: scale(1.2);
+  background-color: #005875;
+}
+90% {
+  transform: scale(1);
+}
+95% {
+  background-color: #d75252;
+}
   100% {
     transform: scale(0.9);
     background-color: #bc88e2;
@@ -86,13 +109,15 @@ button:hover {
 }
 
 .shortest-path {
-  animation: grow 0.5s ease-in-out;
+  animation: grow 1s ease-in-out;
   animation-fill-mode: forwards;
+  animation-delay: 0.01s;
 }
 
 .visited-node {
-  animation: grow-reverse 0.5s ease-in-out;
+  animation: grow-reverse 1s ease-in-out;
   animation-fill-mode: forwards;
+  animation-delay: 0.01s;
 }
 
 /* .tutorial-wrapper {
