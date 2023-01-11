@@ -3,6 +3,7 @@ import { dijkstraAlgorithm } from "./algorithms/dijkstra.js";
 import { aStarAlgorithm } from "./algorithms/a_star.js";
 import { bfs } from "./algorithms/bfs.js";
 import { bidirectional } from "./algorithms/bid.js";
+import { dfs } from "./algorithms/dfs.js";
 
 /* Elements */
 const gridContainer = document.querySelector(".grid-container");
@@ -200,8 +201,9 @@ startAlgorithmButton.addEventListener("click", () => {
       case "bid-algorithm":
         bidirectional(startNode, endNode, speed);
         break;
-      // case "dfs-algorithm":
-      //   break;
+      case "dfs-algorithm":
+        dfs(grid, startNode, endNode, speed);
+        break;
       // case "bellman-algorithm":
       //   break;
       // case "floyd-algorithm":
